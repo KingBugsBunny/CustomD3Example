@@ -262,8 +262,6 @@ var data = {
                         .text(item.dataLabel)
             }
         }
-
-
     }
 
     svg.selectAll('words').data(data.plots).enter().
@@ -272,9 +270,8 @@ var data = {
             .attr('y', function(d,i){ return (laneStep * i)  + 0.1 + 'in'})
             .attr('fill',function(){return '#000'})
             .attr('text-anchor', function(){return'middle'})
-            .attr('transform', function(){return ''})
             .attr('transform', function(){return 'rotate(-90, 0, 0), translate(-230, 10)'})
-            .text(function(d, i){ return data.plots[i].title});
+            .text(function(d){ return d.title});
 
     // Chart border
     svg.append('rect')
