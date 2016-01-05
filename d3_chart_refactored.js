@@ -1,3 +1,5 @@
+'use strict';
+
 var data = {
     width: 2,
     height: 8.5,
@@ -109,7 +111,18 @@ var basicTitles = [
     'Logic',
     'Energy Style',
     'Kinetic Energy'
-]
+];
+
+var laneStep = data.width / basicTitles.length;
+var colStep = (data.height - data.headerHeight) / basicTitles.length;
+
+var x = d3.scale.linear().range(['0', data.width]),
+    y = d3.scale.linear().range(['0', '1in']);
+
+var ruler = d3.svg.axis()
+    .scale(y)
+    .orient('right')
+    .ticks(7);
 
 // canvas
 var svg = d3.select('body')
@@ -142,52 +155,109 @@ svg.append('rect')
     .attr('fill', 'white');
 
 // Render lanes
-laneStep = data.width / basicTitles.length;
-
-svg.selectAll('laneLines').data(basicTitles).enter().append('line')
-    .attr('x1', function(d,i){return laneStep * (i + 1.0) + 'in'})
+svg.append('g').selectAll('laneLines').data(basicTitles).enter().append('line')
+    .attr('x1', function (d, i) {
+        return laneStep * (i + 1.0) + 'in';
+    })
     .attr('y1', '0.025in')
-    .attr('x2', function(d,i){return laneStep * (i + 1.0) + 'in'})
+    .attr('x2', function (d, i) {
+        return laneStep * (i + 1.0) + 'in';
+    })
     .attr('y2', data.height + 'in')
-    .attr('stroke','#000')
+    .attr('stroke', '#000')
+    .attr('stroke-width', function(d, i){
+        return i === 6 ? '0.0':'0.01in';
+    });
+
+//main chart logic
+
+//render DEPC bars
+
+
+
+//render norm line
+svg.append('g').append('line')
+    .attr('class', 'normLine')
+    .attr('x1', '0in')
+    .attr('y1', data.expectations.basic.norm / 100 + 'in')
+    .attr('x2', (laneStep * 4) + 'in')
+    .attr('y2', data.expectations.basic.norm / 100 + 'in')
+    .attr('stroke', colorBlue1)
+    .attr('stroke-width', '0.04in');
+
+//render logic bar
+svg.append('g')
+    .append('line')
+    .attr('class', 'normLine')
+    .attr('x1', (laneStep * 5) + 'in')
+    .attr('y1', data.expectations.basic.ref / 100 + 'in')
+    .attr('x2', (laneStep * 4) + 'in')
+    .attr('y2', data.expectations.basic.ref / 100 + 'in')
+    .attr('stroke', colorBlue1)
+    .attr('stroke-width', '0.04in');
+
+//render ruler ticks right side
+svg.append('g').selectAll('rulerLinesRight').data(basicTitles).enter().append('line')
+    .attr('class', 'ruler')
+    .attr('x1', '1.75in')
+    .attr('y1', function (d, i) {
+        return colStep * (i + 1.50) + 'in';
+    })
+    .attr('x2', '1.95' + 'in')
+    .attr('y2', function (d, i) {
+        return colStep * (i + 1.50) + 'in';
+    })
+    .attr('stroke', '#999')
     .attr('stroke-width', '0.01in');
 
-// Render line below headers
+//TODO:find out if they wanted the ticks on the opposite side of the numbers not inch marks
+//render ruler ticks left side
+svg.append('g').selectAll('rulerLinesLeft').data(basicTitles).enter().append('line')
+    .attr('class', 'ruler')
+    .attr('x1', '0in')
+    .attr('y1', function (d, i) {
+        return colStep * (i + 1.50) + 'in';
+    })
+    .attr('x2','.10in')
+    .attr('y2', function (d, i) {
+        return colStep * (i + 1.50) + 'in';
+    })
+    .attr('stroke', '#999')
+    .attr('stroke-width', '0.01in');
+
+//render ruler numbers
+svg.append('g').selectAll('ruler').data(basicTitles).enter().append('text')
+    .attr('class', 'rulerNumbers')
+    .attr('x', '1.8in')
+    .attr('y', function(d, i){return colStep * (i + 2) + 'in'})
+    .attr('fill', '#999')
+    .text(function(d,i) {return (i - 7) * -1});
+
+// render line below headers
 svg.append('line')
     .attr('x1', '0in')
-    .attr('y1', '1.5in')
+    .attr('y1', data.headerHeight + 'in')
     .attr('x2', data.width + 'in')
-    .attr('y2', '1.5in')
+    .attr('y2', data.headerHeight + 'in')
     .attr('stroke', '#000')
     .attr('stroke-width', '0.01in');
 
-// TODO: create logic
-//logic
-
-
-// titles
+// render titles
 svg.append('g').selectAll('words').data(basicTitles).enter()
     .append('text')
-    .attr('x', function () {
-        return data.headerHeight - 0.1 + 'in'
-    })
+    .attr('class', 'titles')
+    .attr('x', data.headerHeight - 0.1 + 'in')
     .attr('y', function (d, i) {
-        return (laneStep * i) + 0.05 + 'in'
+        return (laneStep * i) + 0.05 + 'in';
     })
-    .attr('fill', function () {
-        return '#000'
-    })
-    .attr('text-anchor', function () {
-        return 'middle'
-    })
-    .attr('transform', function () {
-        return 'rotate(-90, 0, 0), translate(-225, 13)'
-    })
+    .attr('fill', '#000')
+    .attr('text-anchor', 'middle')
+    .attr('transform', 'rotate(-90, 0, 0), translate(-225, 13)')
     .text(function (d) {
-        return d
+        return d;
     });
 
-// Chart border
+// render chart border
 svg.append('rect')
     .attr('width', data.width + 'in')
     .attr('height', data.height + 'in')
