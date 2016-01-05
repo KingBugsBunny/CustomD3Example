@@ -210,7 +210,7 @@ svg.append('g').selectAll('rulerLinesRight').data(basicTitles).enter().append('l
     .attr('stroke', '#999')
     .attr('stroke-width', '0.01in');
 
-//TODO:find out if they wanted the ticks on the opposite side of the numbers
+//TODO:find out if they wanted the ticks on the opposite side of the numbers not inch marks
 //render ruler ticks left side
 svg.append('g').selectAll('rulerLinesLeft').data(basicTitles).enter().append('line')
     .attr('class', 'ruler')

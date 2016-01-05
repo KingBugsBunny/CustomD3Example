@@ -262,19 +262,16 @@ var data = {
                         .text(item.dataLabel)
             }
         }
-
-
     }
 
-    for (var i = 0; i < data.plots.length; i++) {
-        svg.append('text')
-            .attr('x', (laneStep * i) + 0.1 + 'in')
-            .attr('y', data.headerHeight - 0.05 + 'in')
-            .attr('fill', '#000')
-            .attr('text-anchor', 'middle')
-            .attr('transform', ' rotate(-15, 0, 0)')
-            .text(data.plots[i].title);
-    }
+    svg.selectAll('words').data(data.plots).enter().
+        append('text')
+            .attr('x', function(){ return data.headerHeight - 0.05 + 'in'})
+            .attr('y', function(d,i){ return (laneStep * i)  + 0.1 + 'in'})
+            .attr('fill',function(){return '#000'})
+            .attr('text-anchor', function(){return'middle'})
+            .attr('transform', function(){return 'rotate(-90, 0, 0), translate(-230, 10)'})
+            .text(function(d){ return d.title});
 
     // Chart border
     svg.append('rect')
