@@ -4,95 +4,95 @@ var data = {
     width: 2,
     height: 8.5,
     headerHeight: 1.5,
-    name: 'C. C. Sample',
-    //type: pgc.SurveyType.ProScan,
-    results: [
-        5, 4, 4, 5, 2,
-        3, 5, 4, 3, 3,
-        4, 5, 3, 3, 3,
-        4, 5, 3, 3, 3,
-        3, 3, 4, 4, 5,
-        4, 5, 4, 5, 5,
-        5, 5, 3, 5, 5,
-        5, 5, 2, 5, 5,
-        2, 5, 5, 5, 5,
-        4, 3, 3, 3, 2,
+    name: 'Pat Smith Sample',
+    // type: pgc.SurveyType.ProScan,
+    responses: [
+        5, 3, 5, 5, 5,
         5, 5, 4, 5, 4,
-        3, 5, 4, 5, 4
+        3, 5, 5, 5, 1,
+        5, 3, 5, 5, 5,
+        1, 4, 4, 5, 4,
+        3, 4, 3, 4, 4,
+        5, 5, 5, 5, 5,
+        5, 5, 5, 5, 5,
+        1, 5, 5, 5, 5,
+        5, 5, 5, 4, 5,
+        5, 5, 4, 5, 3,
+        5, 4, 3, 5, 4
     ],
     expectations: {
         basic: {
-            dominance: 225,
-            extroversion: 292,
-            pace: 592,
-            conformity: 554,
-            norm: 408,
-            logic: 342,
-            thrust: 275,
-            allegiance: 573,
-            stenacity: 409,
-            kinetic: 543,
-            ref: 424
+            dominance: 612,
+            extroversion: 628,
+            pace: 356,
+            conformity: 438,
+            norm: 492,
+            logic: 312,
+            thrust: 680,
+            allegiance: 366,
+            stenacity: 453,
+            kinetic: 604,
+            ref: 544
         },
         priority: {
-            dominance: 396,
-            extroversion: 558,
+            dominance: 608,
+            extroversion: 617,
             pace: 588,
-            conformity: 515,
-            norm: 492,
-            logic: 479,
-            thrust: 496,
-            allegiance: 569,
-            stenacity: 510,
-            kinetic: 574,
-            ref: 532
+            conformity: 500,
+            norm: 558,
+            logic: 546,
+            thrust: 660,
+            allegiance: 580,
+            stenacity: 634,
+            kinetic: 626,
+            ref: 620
         },
         predictor: {
-            dominance: 283,
-            extroversion: 469,
-            pace: 608,
-            conformity: 530,
-            norm: 445,
-            logic: 413,
-            thrust: 455,
-            allegiance: 568,
-            stenacity: 485,
-            kinetic: 567,
-            ref: 511
+            dominance: 623,
+            extroversion: 662,
+            pace: 486,
+            conformity: 486,
+            norm: 574,
+            logic: 444,
+            thrust: 671,
+            allegiance: 531,
+            stenacity: 577,
+            kinetic: 634,
+            ref: 601
         },
         dominance: {
-            base: 309,
-            length: 87,
+            base: 678,
+            length: -70,
             crosses: false
         },
         extroversion: {
-            base: 376,
-            length: 182,
-            crosses: true
-        },
-        pace: {
-            base: 676,
-            length: -88,
+            base: 680,
+            length: -63,
             crosses: false
         },
+        pace: {
+            base: 422,
+            length: 166,
+            crosses: true
+        },
         conformity: {
-            base: 638,
-            length: -123,
+            base: 504,
+            length: -4,
             crosses: false
         },
         logic: {
-            base: 450,
-            length: 29,
+            base: 388,
+            length: 158,
             crosses: false
         },
         kinetic: {
-            base: 402,
-            length: -172,
+            base: 479,
+            length: -147,
             crosses: false
         },
         satisfaction: {
-            base: 424,
-            length: 108,
+            base: 544,
+            length: 76,
             level: 'H'
         }
     }
@@ -125,7 +125,7 @@ function renderBasicChart(data) {
     var norm = (data.height * 100) - data.expectations.basic.norm,
         sigmaTickOriginPoint = norm;
 
-    while(sigmaTickOriginPoint > data.headerHeight) {
+    while (sigmaTickOriginPoint > data.headerHeight) {
         sigmaTickOriginPoint -= 100;
 
     }
@@ -142,9 +142,9 @@ function renderBasicChart(data) {
 //data parsing
     var depcArray = [],
         tasArray = [],
-        thirtyItemArray = data.results.slice();
+        thirtyItemArray = data.responses.slice();
 
-    thirtyItemArray = thirtyItemArray.slice(0,29);
+    thirtyItemArray = thirtyItemArray.slice(0, 29);
 
     //assign data from data.expectations.basic so it can be assigned to other arrays
     for (var k in data.expectations.basic) {
@@ -209,36 +209,29 @@ function renderBasicChart(data) {
     //main chart logic
 
     //render DEPC bars
-    //if negative
-    svg.append('g').selectAll('depcBarsUp').data(depcArray).enter().append('rect')
-        .attr('class', 'depcBars')
-        .attr('x', function (d, i) {
-            return (laneStep * i + .01) + 'in'
-        })
-        .attr('y', function (d) {
-            return data.height - (d / 100) + 'in'
-        })
-        .attr('width', (laneStep - 0.01) + 'in')
-        .attr('height', function (d) {
-            if (d - norm > 0)
-                return (d - data.expectations.basic.norm) / 100 + 'in'
-        })
-        .style('fill', colorBlue2);
-
-    //if positive
     svg.append('g').selectAll('depcBarsDown').data(depcArray).enter().append('rect')
         .attr('class', 'depcBars')
         .attr('x', function (d, i) {
-            return (laneStep * i + .01) + 'in'
+            return (laneStep * i) + 'in'
         })
-        .attr('y', norm / 100 + 'in')
+        .attr('y', function(d){
+            if(d > data.expectations.basic.norm){
+                //if positive
+                return (data.height * 100 - d )/ 100 + 'in';
+            } else {
+                //if negative
+                return norm / 100 + 'in';
+            }
+        })
         .attr('width', (laneStep - 0.01) + 'in')
         .attr('height', function (d) {
-            if (d - norm < 0)
-                return (d - data.expectations.basic.norm) * -1 / 100 + 'in'
+            if (d - data.expectations.basic.norm < 0) {
+                return (d - data.expectations.basic.norm) * -1 / 100 + 'in';
+            } else {
+                return (d - data.expectations.basic.norm) / 100 + 'in';
+            }
         })
         .style('fill', colorBlue2);
-
 
     //render DEPC circles
     svg.append('g').selectAll('circles').data(depcArray).enter().append('circle')
@@ -276,14 +269,20 @@ function renderBasicChart(data) {
         .style('stroke-width', '0.03in');
 
     //render Logic Bar
-    //TODO: cant go negative
     //if positive
     if ((data.expectations.basic.ref - data.expectations.basic.logic) < 0) {
         svg.append('g').append('rect')
             .attr('class', 'logicBar')
             .attr('x', (laneStep * 5 - laneStep) + 'in')
-            .attr('y', (data.height - (data.expectations.basic.logic / 100) + 'in'))
-            .attr('height', (data.expectations.basic.ref - data.expectations.basic.logic) / 100 + 'in')
+            .attr('y', (data.height * 100 - (data.expectations.basic.logic / 100) + 'in'))
+            .attr('height', function(){
+                var positiveHeight = data.expectations.basic.ref - data.expectations.basic.logic;
+
+                if(positiveHeight < 0){
+                    positiveHeight *= -1;
+                }
+                return  positiveHeight / 100 + 'in';
+            })
             .attr('width', (laneStep - 0.01) + 'in')
             .style('fill', colorBlue2);
     } else {
@@ -292,7 +291,13 @@ function renderBasicChart(data) {
             .attr('class', 'logicBar')
             .attr('x', (laneStep * 5 - laneStep) + 'in')
             .attr('y', ((data.height * 100) - data.expectations.basic.ref) / 100 + 'in')
-            .attr('height', (data.expectations.basic.ref - data.expectations.basic.logic) / 100 + 'in')
+            .attr('height',function(){
+                var positiveHeight = data.expectations.basic.ref - data.expectations.basic.logic;
+
+                if(positiveHeight < 0){
+                    positiveHeight *= -1;
+                }
+                return  positiveHeight / 100 + 'in'})
             .attr('width', (laneStep - 0.01) + 'in')
             .style('fill', colorBlue2);
     }
@@ -484,7 +489,7 @@ function renderPredictorChart(data) {
     var norm = (data.height * 100) - data.expectations.predictor.norm,
         sigmaTickOriginPoint = norm;
 
-    while(sigmaTickOriginPoint > data.headerHeight) {
+    while (sigmaTickOriginPoint > data.headerHeight) {
         sigmaTickOriginPoint -= 100;
 
     }
@@ -501,9 +506,9 @@ function renderPredictorChart(data) {
 //data parsing
     var depcArray = [],
         tasArray = [],
-        thirtyItemArray = data.results.slice();
+        thirtyItemArray = data.responses.slice();
 
-    thirtyItemArray = thirtyItemArray.slice(0,29);
+    thirtyItemArray = thirtyItemArray.slice(0, 29);
 
     //assign data from data.expectations.predictor so it can be assigned to other arrays
     for (var k in data.expectations.predictor) {
@@ -568,36 +573,29 @@ function renderPredictorChart(data) {
     //main chart logic
 
     //render DEPC bars
-    //if negative
-    svg.append('g').selectAll('depcBarsUp').data(depcArray).enter().append('rect')
-        .attr('class', 'depcBars')
-        .attr('x', function (d, i) {
-            return (laneStep * i + .01) + 'in'
-        })
-        .attr('y', function (d) {
-            return data.height - (d / 100) + 'in'
-        })
-        .attr('width', (laneStep - 0.01) + 'in')
-        .attr('height', function (d) {
-            if (d - norm > 0)
-                return (d - data.expectations.predictor.norm) / 100 + 'in'
-        })
-        .style('fill', colorGreen2);
-
-    //if positive
     svg.append('g').selectAll('depcBarsDown').data(depcArray).enter().append('rect')
         .attr('class', 'depcBars')
         .attr('x', function (d, i) {
-            return (laneStep * i + .01) + 'in'
+            return (laneStep * i) + 'in'
         })
-        .attr('y', norm / 100 + 'in')
+        .attr('y', function(d){
+            if(d > data.expectations.predictor.norm){
+                //if positive
+                return (data.height * 100 - d )/ 100 + 'in';
+            } else {
+                //if negative
+                return norm / 100 + 'in';
+            }
+        })
         .attr('width', (laneStep - 0.01) + 'in')
         .attr('height', function (d) {
-            if (d - norm < 0)
-                return (d - data.expectations.predictor.norm) * -1 / 100 + 'in'
+            if (d - data.expectations.basic.norm < 0) {
+                return (d - data.expectations.predictor.norm) * -1 / 100 + 'in';
+            } else {
+                return (d - data.expectations.predictor.norm) / 100 + 'in';
+            }
         })
         .style('fill', colorGreen2);
-
 
     //render DEPC circles
     svg.append('g').selectAll('circles').data(depcArray).enter().append('circle')
@@ -629,7 +627,7 @@ function renderPredictorChart(data) {
         })
         .style('stroke', function (d, i) {
             if (i < 3) {
-                return colorGreen1
+                return colorGreen1;
             }
         })
         .style('stroke-width', '0.03in');
@@ -843,7 +841,7 @@ function renderPriorityChart(data) {
     var norm = (data.height * 100) - data.expectations.priority.norm,
         sigmaTickOriginPoint = norm;
 
-    while(sigmaTickOriginPoint > data.headerHeight) {
+    while (sigmaTickOriginPoint > data.headerHeight) {
         sigmaTickOriginPoint -= 100;
 
     }
@@ -875,9 +873,10 @@ function renderPriorityChart(data) {
     var depcArray = [],
         arrowOriginArray = [],
         arrowLineLength = [],
-        thirtyItemArray = data.results.slice();
+        thirtyItemArray = data.responses.slice();
 
-    thirtyItemArray = thirtyItemArray.slice(0,29);;
+    thirtyItemArray = thirtyItemArray.slice(0, 29);
+    ;
 
     //assign data from data.expectations.priority so it can be assigned to other arrays
     for (var k in data.expectations.priority) {
@@ -1109,14 +1108,13 @@ function renderPriorityChart(data) {
         .style('fill', colorBlue);
 
     //render depc Arrow heads
-    //dominance
-    svg.append('path')
+    svg.append('g').selectAll('depcArrowHeads').data(depcArray).enter().append('path')
         .attr("d", d3.svg.symbol()
             .size(function () {
                 return depcTriangleSize * depcTriangleSize;
             })
-            .type(function () {
-                if (data.expectations.dominance.length > 0) {
+            .type(function (d, i) {
+                if (arrowLineLength[i] > 0) {
                     return 'triangle-up';
                 } else {
                     return 'triangle-down';
@@ -1133,77 +1131,6 @@ function renderPriorityChart(data) {
         })
         .style('fill', colorRed);
 
-//extroversion
-    svg.append('path')
-        .attr("d", d3.svg.symbol()
-            .size(function () {
-                return depcTriangleSize * depcTriangleSize;
-            })
-            .type(function () {
-                if (data.expectations.extroversion.length > 0) {
-                    return 'triangle-up';
-                } else {
-                    return 'triangle-down';
-                }
-            }))
-        .attr("transform", function (d, i) {
-            if (arrowLineLength[i] > 0) {
-                return "translate(" + ( laneStep + laneStep / 2.5) * 100 +
-                    ", " + (data.height * 100 - data.expectations.priority.extroversion + 5) + ")"
-            } else {
-                return "translate(" + ((laneStep + laneStep / 2.5)) * 100 +
-                    ", " + (data.height * 100 - data.expectations.priority.extroversion - 5) + ")"
-            }
-        })
-        .style('fill', colorRed);
-
-    //conformity
-    svg.append('path')
-        .attr("d", d3.svg.symbol()
-            .size(function () {
-                return depcTriangleSize * depcTriangleSize;
-            })
-            .type(function () {
-                if (data.expectations.conformity.length > 0) {
-                    return 'triangle-up';
-                } else {
-                    return 'triangle-down';
-                }
-            }))
-        .attr("transform", function (d, i) {
-            if (arrowLineLength[i] > 0) {
-                return "translate(" + ( laneStep * 3 + laneStep / 2.7) * 100 +
-                    ", " + (data.height * 100 - data.expectations.priority.conformity - 30) + ")"
-            } else {
-                return "translate(" + ((laneStep * 3 + laneStep / 2.7)) * 100 +
-                    ", " + (data.height * 100 - data.expectations.priority.conformity + 25) + ")"
-            }
-        })
-        .style('fill', colorRed);
-
-    //pace
-    svg.append('path')
-        .attr("d", d3.svg.symbol()
-            .size(function () {
-                return depcTriangleSize * depcTriangleSize;
-            })
-            .type(function () {
-                if (data.expectations.pace.length > 0) {
-                    return 'triangle-up';
-                } else {
-                    return 'triangle-down';
-                }
-            }))
-        .attr("transform", function (d, i) {
-            if (arrowLineLength[i] > 0) {
-                return "translate(" + ( laneStep * 2 + laneStep / 2.5) * 100 +
-                    ", " + (data.height * 100 - data.expectations.priority.pace - 26) + ")"
-            } else {
-                return "translate(" + ((laneStep * 2 + laneStep / 2.5)) * 100 +
-                    ", " + (data.height * 100 - data.expectations.priority.pace) + ")"
-            }
-        })
-        .style('fill', colorRed);
 
     //render satisfaction triangle
     svg.append('g').append('path')
@@ -1242,7 +1169,7 @@ function renderPriorityChart(data) {
             if (data.expectations.satisfaction.level == 'H') {
                 return (data.height * 100 - data.expectations.priority.norm - satisfactionTriangleSize * 1.8) / 100 + 'in';
             } else {
-                return (data.height * 100 - data.expectations.priority.norm + satisfactionTriangleSize * 1.3)  / 100 + 'in';
+                return (data.height * 100 - data.expectations.priority.norm + satisfactionTriangleSize * 1.3) / 100 + 'in';
             }
         })
         .text(function () {
@@ -1260,9 +1187,9 @@ function renderPriorityChart(data) {
         .attr('x', (laneStep * 5 + laneStep / 1000) * 100)
         .attr('y', function () {
             if (data.expectations.satisfaction.level == 'H') {
-                return (data.height * 100 - data.expectations.priority.norm - satisfactionTriangleSize)  / 100 + 'in';
+                return (data.height * 100 - data.expectations.priority.norm - satisfactionTriangleSize) / 100 + 'in';
             } else {
-                return (data.height * 100 - data.expectations.priority.norm + satisfactionTriangleSize * 2)  / 100 + 'in';
+                return (data.height * 100 - data.expectations.priority.norm + satisfactionTriangleSize * 2) / 100 + 'in';
             }
         })
         .text('SAT')
@@ -1369,5 +1296,5 @@ function renderPriorityChart(data) {
 
 renderBasicChart(data);
 renderPredictorChart(data);
-renderPriorityChart(data);
+//renderPriorityChart(data);
 
