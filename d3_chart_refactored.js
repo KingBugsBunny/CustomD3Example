@@ -1406,4 +1406,3 @@ function renderPriorityChart(data) {
 renderBasicChart(data);
 renderPredictorChart(data);
 renderPriorityChart(data);
-
