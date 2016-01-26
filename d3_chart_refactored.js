@@ -133,7 +133,7 @@ function renderBasicChart(data) {
     sigmaTickOriginPoint = norm - data.headerHeight - (norm - sigmaTickOriginPoint);
 
 // canvas
-    var svg = d3.select('body')
+    var svg = d3.select('#basicChart')
         .classed('svg-container', true)
         .append('svg')
         .attr('viewBox', '0 0 ' + (data.width + 0.05) * 100 + ' ' + (data.height + 0.05) * 100 + '')
@@ -204,6 +204,23 @@ function renderBasicChart(data) {
         .style('fill', '#999')
         .text(function (d, i) {
             return (i - 7) * -1;
+        });
+
+// Render lanes
+    svg.append('g').selectAll('laneLines').data(textTitles).enter().append('line')
+        .attr('x1', function (d, i) {
+            return laneStep * (i + 1.0) + 'in';
+        })
+        .attr('y1', '0.025in')
+        .attr('x2', function (d, i) {
+            return laneStep * (i + 1.0) + 'in';
+        })
+        .attr('y2', data.height + 'in')
+        .style('stroke', function (d, i) {
+            return i === 3 || i === 4 ? '#000' : '#999'
+        })
+        .style('stroke-width', function (d, i) {
+            return i === 6 ? '0.00in' : '0.01in';
         });
 
     //main chart logic
@@ -390,7 +407,7 @@ function renderBasicChart(data) {
                 return "diamond"
             }))
         .attr("transform", "translate(" + (laneStep * 6 + .07) * 100 + ", " + (data.height * 100 - data.expectations.basic.kinetic) + ")")
-        .style('fill', 'transparent')
+        .style('fill', '#fff')
         .style('stroke', colorBlue1)
         .style('stroke-width', '0.02in');
 
@@ -447,22 +464,6 @@ function renderBasicChart(data) {
             return d;
         });
 
-// Render lanes
-    svg.append('g').selectAll('laneLines').data(textTitles).enter().append('line')
-        .attr('x1', function (d, i) {
-            return laneStep * (i + 1.0) + 'in';
-        })
-        .attr('y1', '0.025in')
-        .attr('x2', function (d, i) {
-            return laneStep * (i + 1.0) + 'in';
-        })
-        .attr('y2', data.height + 'in')
-        .style('stroke', function (d, i) {
-            return i === 3 || i === 4 ? '#000' : '#999'
-        })
-        .style('stroke-width', function (d, i) {
-            return i === 6 ? '0.00in' : '0.01in';
-        });
 
     // render chart border
     svg.append('rect')
@@ -500,7 +501,7 @@ function renderPredictorChart(data) {
     sigmaTickOriginPoint = norm - data.headerHeight - (norm - sigmaTickOriginPoint);
 
 // canvas
-    var svg = d3.select('body')
+    var svg = d3.select('#predictorChart')
         .classed('svg-container', true)
         .append('svg')
         .attr('viewBox', '0 0 ' + (data.width + 0.02) * 100 + ' ' + (data.height + 0.02) * 100 + '')
@@ -571,6 +572,23 @@ function renderPredictorChart(data) {
         .style('fill', '#999')
         .text(function (d, i) {
             return (i - 7) * -1;
+        });
+
+    // Render lanes
+    svg.append('g').selectAll('laneLines').data(textTitles).enter().append('line')
+        .attr('x1', function (d, i) {
+            return laneStep * (i + 1.0) + 'in';
+        })
+        .attr('y1', '0.025in')
+        .attr('x2', function (d, i) {
+            return laneStep * (i + 1.0) + 'in';
+        })
+        .attr('y2', data.height + 'in')
+        .style('stroke', function (d, i) {
+            return i === 3 || i === 4 ? '#000' : '#999'
+        })
+        .style('stroke-width', function (d, i) {
+            return i === 6 ? '0.00in' : '0.01in';
         });
 
     //main chart logic
@@ -742,7 +760,7 @@ function renderPredictorChart(data) {
                 return "diamond"
             }))
         .attr("transform", "translate(" + (laneStep * 6 + .07) * 100 + ", " + (data.height * 100 - data.expectations.predictor.kinetic) + ")")
-        .style('fill', 'transparent')
+        .style('fill', '#fff')
         .style('stroke', colorGreen2)
         .style('stroke-width', '0.02in');
 
@@ -800,23 +818,6 @@ function renderPredictorChart(data) {
             return d;
         });
 
-    // Render lanes
-    svg.append('g').selectAll('laneLines').data(textTitles).enter().append('line')
-        .attr('x1', function (d, i) {
-            return laneStep * (i + 1.0) + 'in';
-        })
-        .attr('y1', '0.025in')
-        .attr('x2', function (d, i) {
-            return laneStep * (i + 1.0) + 'in';
-        })
-        .attr('y2', data.height + 'in')
-        .style('stroke', function (d, i) {
-            return i === 3 || i === 4 ? '#000' : '#999'
-        })
-        .style('stroke-width', function (d, i) {
-            return i === 6 ? '0.00in' : '0.01in';
-        });
-
     // render chart border
     svg.append('rect')
         .attr('width', data.width + 'in')
@@ -867,7 +868,7 @@ function renderPriorityChart(data) {
         depcTriangleSize = 12;
 
 // canvas
-    var svg = d3.select('body')
+    var svg = d3.select('#priorityChart')
         .classed('svg-container', true)
         .append('svg')
         .attr('viewBox', '0 0 ' + (data.width + 0.05) * 100 + ' ' + (data.height + 0.05) * 100 + '')
@@ -928,23 +929,6 @@ function renderPriorityChart(data) {
         .attr('ry', '0.25in')
         .style('fill', 'white');
 
-// Render lanes
-    svg.append('g').selectAll('laneLines').data(titleArray).enter().append('line')
-        .attr('x1', function (d, i) {
-            return laneStep * (i + 1.0) + 'in';
-        })
-        .attr('y1', '0.025in')
-        .attr('x2', function (d, i) {
-            return laneStep * (i + 1.0) + 'in';
-        })
-        .attr('y2', data.height + 'in')
-        .style('stroke', function (d, i) {
-            return i === 3 || i === 4 ? '#000' : '#999';
-        })
-        .style('stroke-width', function (d, i) {
-            return i === 6 ? '0.00in' : '0.01in';
-        });
-
     //render ruler ticks
     svg.append('g').selectAll('rulerTicks').data(titleArray).enter().append('line')
         .attr('class', 'ruler')
@@ -969,6 +953,23 @@ function renderPriorityChart(data) {
         .style('fill', '#999')
         .text(function (d, i) {
             return (i - 7) * -1;
+        });
+
+// Render lanes
+    svg.append('g').selectAll('laneLines').data(titleArray).enter().append('line')
+        .attr('x1', function (d, i) {
+            return laneStep * (i + 1.0) + 'in';
+        })
+        .attr('y1', '0.025in')
+        .attr('x2', function (d, i) {
+            return laneStep * (i + 1.0) + 'in';
+        })
+        .attr('y2', data.height + 'in')
+        .style('stroke', function (d, i) {
+            return i === 3 || i === 4 ? '#000' : '#999';
+        })
+        .style('stroke-width', function (d, i) {
+            return i === 6 ? '0.00in' : '0.01in';
         });
 
     //main chart logic
