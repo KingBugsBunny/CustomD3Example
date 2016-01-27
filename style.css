@@ -1,19 +1,45 @@
-.svg-container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%; /* aspect ratio */
-    vertical-align: top;
-    overflow: hidden;
-}
-.svg-content-responsive {
-    display: inline-block;
-    position: absolute;
-    top: 10px;
-    left: 0;
+@import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+html {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 12pt;
 }
 
-.container {
-    width: 2in;
-    height: 8.5in;
+/*.svg-container {*/
+    /*display: inline-block;*/
+    /*!*position: relative;*!*/
+    /*!*width: 100%;*!*/
+    /*padding-bottom: 100%; !* aspect ratio *!*/
+    /*vertical-align: top;*/
+    /*overflow: hidden;*/
+/*}*/
+/*.svg-content-responsive {*/
+    /*display: inline-block;*/
+    /*position: absolute;*/
+    /*top: 10px;*/
+    /*left: 0;*/
+/*}*/
+
+.chinese-Container {
+    position: absolute;
+    width: 50%;
+    float: left;
+}
+
+.svg-container {
+    width: 200px;
+    height: 500px;
+    float: right;
+}
+
+.japanese-container {
+    position: absolute;
+    width: 50%;
+    float: left;
+}
+
+.chinese-Container {
+    position: absolute;
+    width: 50%;
+    float: right;
 }
