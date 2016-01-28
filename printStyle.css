@@ -1,7 +1,5 @@
-@import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
-
 html {
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Noto Sans TC';
     font-size: 12pt;
 }
 
@@ -13,10 +11,14 @@ html {
     -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
     -moz-column-gap: 40px; /* Firefox */
     column-gap: 40px;
+
+    -webkit-column-rule-color: lightblue; /* Chrome, Safari, Opera */
+    -moz-column-rule-color: lightblue; /* Firefox */
+    column-rule-color: lightblue;
 }
 
 .svg-container {
     width: 100px;
     height: 300px;
-    float: right;
+    float: left;
 }

@@ -1,7 +1,5 @@
-@import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
-
 html {
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Noto Sans TC';
     font-size: 12pt;
 }
 
@@ -20,6 +18,20 @@ html {
     /*left: 0;*/
 /*}*/
 
+.d3_charts {
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+
+    -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 40px; /* Firefox */
+    column-gap: 40px;
+
+    -webkit-column-rule-color: lightblue; /* Chrome, Safari, Opera */
+    -moz-column-rule-color: lightblue; /* Firefox */
+    column-rule-color: lightblue;
+}
+
 .chinese-Container {
     position: absolute;
     width: 50%;
@@ -28,18 +40,11 @@ html {
 
 .svg-container {
     width: 200px;
-    height: 500px;
-    float: right;
-}
-
-.japanese-container {
-    position: absolute;
-    width: 50%;
     float: left;
 }
 
 .chinese-Container {
     position: absolute;
-    width: 50%;
-    float: right;
+    width: 80%;
+    float: left;
 }
