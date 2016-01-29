@@ -19,6 +19,8 @@ html {
 /*}*/
 
 .d3_charts {
+    display: block;
+    clear: both;
     -webkit-column-count: 2; /* Chrome, Safari, Opera */
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
@@ -33,18 +35,13 @@ html {
 }
 
 .chinese-Container {
-    position: absolute;
-    width: 50%;
+    display: block;
+    position: relative;
     float: left;
+    clear: both;
 }
 
 .svg-container {
     width: 200px;
-    float: left;
-}
-
-.chinese-Container {
-    position: absolute;
-    width: 80%;
     float: left;
 }
