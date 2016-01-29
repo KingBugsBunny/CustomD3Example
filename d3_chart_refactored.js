@@ -351,7 +351,7 @@ function renderChart(whichChart, data) {
             .style('fill', color1);
     }
 
-    function rednderDEPCLines() {
+    function renderDEPCLines() {
         //render DEPC line connections
         svg.append('g').selectAll('depcLines').data(depcArray).enter().append('line')
             .attr('class', 'depcLines')
@@ -885,7 +885,7 @@ function renderChart(whichChart, data) {
         renderBars();
         renderLogicCircle();
         renderLogicText();
-        rednderDEPCLines();
+        renderDEPCLines();
         renderTAS();
 
     }
@@ -907,4 +907,4 @@ function renderChart(whichChart, data) {
 
 }
 
-renderChart('priority', data);
+renderChart('predictor', data);
