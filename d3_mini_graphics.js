@@ -118,8 +118,8 @@ function miniChart(data) {
         }
     }
 
-    circleArray.splice(4,1);
-    circleArray.splice(5,9);
+    circleArray.splice(4, 1);
+    circleArray.splice(5, 9);
 
     var laneStep = originWidth / (circleArray.length + 1);
 
@@ -161,28 +161,34 @@ function miniChart(data) {
     svg.append('g').append('line')
         .attr('class', 'normLine')
         .attr('x1', ((laneStep * (circleArray.length)) + 'in'))
-        .attr('y1', function(){
+        .attr('y1', function() {
             var y;
 
-            y = data.expectations.basic.norm - data.expectations - originHeight;
+            y = (originHeight * 100 - (data.expectations.basic.norm - data.expectations.basic.logic)) / 100;
 
             return y + 'in';
         })
         .attr('x2', ((laneStep * (circleArray.length - 1)) + 'in'))
-        .attr('y2', originHeight + 'in')
+        .attr('y2', function() {
+            var y;
+
+            y = (originHeight * 100 - (data.expectations.basic.norm - data.expectations.basic.logic)) / 100;
+
+            return y + 'in';
+        })
         .style('stroke', colorBlue1)
         .style('stroke-width', '0.04in');
 
-    ////append DEPC data
-    //svg.append('g').selectAll('circles').data(circleArray).enter().append('circle')
-    //    .attr('cx', function (d, i) {
-    //        return (laneStep * (i) - laneStep / data.width) + 'in'
-    //    })
-    //    .attr('cy', function (d) {
-    //        return data.height - (d / 100) + 'in'
-    //    })
-    //    .attr('r', (laneStep / 2 - 0.025) + 'in')
-    //    .style('fill', colorBlue1);
+    // //append DEPC data
+    // svg.append('g').selectAll('circles').data(circleArray).enter().append('circle')
+    //     .attr('cx', function(d, i) {
+    //         return ((laneStep * (d) / 2 + 'in')
+    //     })
+    //     .attr('cy', function(d) {
+    //         return data.height - (d / 100) + 'in'
+    //     })
+    //     .attr('r', (laneStep / 2 - 0.025) + 'in')
+    //     .style('fill', colorBlue1);
 };
 
 miniChart(data);
