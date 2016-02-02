@@ -111,6 +111,11 @@ function miniChart(data) {
     var originHeight = data.height / 2,
         originWidth = data.width / 2;
 
+    //create scale
+    var heightScale = d3.scale.linear()
+        .domain([0, Math.max(circleArray)])
+        .range([0, data.height * 100]);
+
     //parse data
     for (var k in data.expectations.basic) {
         if (data.expectations.basic.hasOwnProperty(k)) {
@@ -179,16 +184,20 @@ function miniChart(data) {
         .style('stroke', colorBlue1)
         .style('stroke-width', '0.04in');
 
-    // //append DEPC data
-    // svg.append('g').selectAll('circles').data(circleArray).enter().append('circle')
-    //     .attr('cx', function(d, i) {
-    //         return ((laneStep * (d) / 2 + 'in')
-    //     })
-    //     .attr('cy', function(d) {
-    //         return data.height - (d / 100) + 'in'
-    //     })
-    //     .attr('r', (laneStep / 2 - 0.025) + 'in')
-    //     .style('fill', colorBlue1);
+    //render DEPC circles
+    svg.append('g').selectAll('circles').data(circleArray).enter().append('circle')
+        .attr('cx', function(d, i) {
+            return (laneStep * (i + 1.0) - laneStep / 2.0) + 'in'
+        })
+        .attr('cy', function(d) {
+            var y;
+
+            y = heightScale((originHeight * 100 - (data.expectations.basic.norm - d)) / 100);
+
+            return y + 'in';
+        })
+        .attr('r', (laneStep / 2) - 0.005 + 'in')
+        .style('fill', colorBlue1);
 };
 
 miniChart(data);
