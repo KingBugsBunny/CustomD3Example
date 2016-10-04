@@ -111,11 +111,6 @@ function miniChart(data) {
     var originHeight = data.height / 2,
         originWidth = data.width / 2;
 
-    //create scale
-    var heightScale = d3.scale.linear()
-        .domain([0, Math.max(circleArray)])
-        .range([0, data.height * 100]);
-
     //parse data
     for (var k in data.expectations.basic) {
         if (data.expectations.basic.hasOwnProperty(k)) {
@@ -192,11 +187,11 @@ function miniChart(data) {
         .attr('cy', function(d) {
             var y;
 
-            y = heightScale((originHeight * 100 - (data.expectations.basic.norm - d)) / 100);
+            y = (originHeight * 100 - (data.expectations.basic.norm - d));
 
-            return y + 'in';
+            return y / 100 + 'in';
         })
-        .attr('r', (laneStep / 2) - 0.005 + 'in')
+        .attr('r', (laneStep / 3) - 0.005 + 'in')
         .style('fill', colorBlue1);
 };
 
